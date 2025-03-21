@@ -11,7 +11,7 @@ const app = express()
 app.use(express.json())
 
 const corsOptions = {
-    origin: "https://navdurgarooms-app.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true
 }
 app.use(cors(corsOptions))
