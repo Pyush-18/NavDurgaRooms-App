@@ -66,7 +66,7 @@ function SearchPage() {
           setShowMore(false)
         }
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }finally{
         setLoader(false)
       }
