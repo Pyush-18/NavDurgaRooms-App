@@ -114,7 +114,7 @@ function SearchPage() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col  md:flex-row">
       {/* left */}
       <div className="p-7 hidden md:block md:min-h-screen border-slate-600 md:border-r">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
@@ -230,7 +230,7 @@ function SearchPage() {
                 <ListingItem key={index} listing={listing} />
               ))
             ) : (
-              <p className="text-red-600 font-semibold text-center">
+              <p className="text-red-600 font-semibold">
                 No listings available
               </p>
             )}
@@ -239,7 +239,7 @@ function SearchPage() {
               showMore &&
               <button
               onClick={showMoreData}
-               className="btn btn-link">Show more</button>
+              className="btn btn-link">Show more</button>
             }
           </div>
       </div>

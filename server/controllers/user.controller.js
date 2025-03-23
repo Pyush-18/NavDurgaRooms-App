@@ -95,6 +95,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, loggedInUser));
   } else {
     const generatePassword = Math.random().toString(36).slice(-8);
+    console.log(generatePassword)
     const newUser = await User.create({
       username: req.body.username,
       email: req.body.email,
@@ -103,6 +104,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
     });
     await newUser.save();
     const token = await user?.generateToken();
+    console.log(token)
     const options = {
       httpOnly: true,
       secure: true,
@@ -116,7 +118,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-  const { username, email, avatar } = req.body;
+  const { username, email } = req.body;
   const avatarFile = await uploadOnCloudinary(req.file?.path);
 
   const updatedProfile = await User.findByIdAndUpdate(

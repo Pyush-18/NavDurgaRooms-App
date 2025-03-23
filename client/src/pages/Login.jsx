@@ -74,7 +74,7 @@ function Signup() {
           {loader && <LoaderCircle className="animate-spin" size={20} />}
           Login
         </button>
-        <OAuth />
+        {/* <OAuth /> */}
         <span className="text-center mt-2">
           don't have an account ?{" "}
           <Link to="/register" className="text-blue-600 underline">

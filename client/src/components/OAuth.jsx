@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import {
   getAuth,
   GoogleAuthProvider,
-  setPersistence,
   signInWithPopup,
 } from "firebase/auth";
 import { app } from "../firebase";
@@ -16,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const handleGoodleClick = async () => {
+  const handleGoogleClick = async () => {
     try {
       dispatch(setLoader(true));
       const provider = new GoogleAuthProvider();
@@ -35,14 +34,14 @@ function OAuth() {
         
       }
     } catch (error) {
-      toast.error("Can't login with google", error?.message);
+      toast.error(`Can't login with Google: ${error?.message}`);
     }finally{
         dispatch(setLoader(false))
     }
   };
   return (
     <button
-      onClick={handleGoodleClick}
+      onClick={handleGoogleClick}
       type="button"
       className="btn btn-secondary w-full uppercase"
     >
