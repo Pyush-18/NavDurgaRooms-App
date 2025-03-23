@@ -123,45 +123,41 @@ export const updateListingById = asyncHandler(async (req, res) => {
   }
 });
 
-export const getListing = asyncHandler(async(req, res) => {
-  const limit = parseInt(req.query.limit) || 9
-  const startIndex = parseInt(req.query.startIndex) || 0
-  let offer = req.query.offer
+export const getListing = asyncHandler(async (req, res) => {
   
-  if(offer === undefined || offer === false){
-    offer = { $in : [false, true] }
-  }
+  const limit = parseInt(req.query.limit) || 9;
+  const startIndex = parseInt(req.query.startIndex) || 0;
 
-  let furnished = req.query.furnished
+ 
+  const filter = {};
 
-  if(furnished === undefined || furnished === false){
-    furnished = { $in : [false, true] }
-  }
-
-  let parking = req.query.parking
-
-  if(parking === undefined || parking === false){
-    parking = { $in : [false, true] }
-  }
-
-  let type = req.query.type
-
-  if(type === undefined || type === "all"){
-    type = { $in : ["sale", "rent"] }
-  }
-
-  let searchTerm = req.query.searchTerm || ''
-
-  let sort = req.query.sort || 'createdAt'
-
-  let order = req.query.order
-  order = order ==="desc" ? -1 : 1
-
-  const listing = await Listing.find({
-    name: { $regex: searchTerm, $options: 'i'},
-    offer, furnished, parking, type
-  }).sort({[sort]: order}).limit(limit).skip(startIndex)
   
+  ['offer', 'parking', 'furnished'].forEach(param => {
+    if (req.query[param] === 'true') {
+      filter[param] = true;
+    }
+  });
+
+
+  if (['sale', 'rent'].includes(req.query.type)) {
+    filter.type = req.query.type;
+  }
+
+ 
+  if (req.query.searchTerm) {
+    filter.name = { $regex: req.query.searchTerm, $options: 'i' };
+  }
+
+
+  const sortField = req.query.sort || 'createdAt';
+  const sortOrder = req.query.order === 'desc' ? -1 : 1;
+
+ 
+  const listings = await Listing.find(filter)
+    .sort({ [sortField]: sortOrder })
+    .limit(limit)
+    .skip(startIndex);
+
   return res.status(200)
-  .json(new ApiResponse(200, listing, "listing fetched successfully"))
-})
+    .json(new ApiResponse(200, listings, "Listings fetched successfully"));
+});

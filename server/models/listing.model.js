@@ -31,11 +31,13 @@ const listingSchema = new mongoose.Schema({
     },
     furnished:{
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     parking:{
         type: Boolean,
-        required: true,
+        default: false,
+        required: true
     },
     type:{
         type: String,
@@ -44,7 +46,8 @@ const listingSchema = new mongoose.Schema({
     },
     offer:{
         type: Boolean,
-        required: true,
+        default: false,
+        required: true
     },
     images:[{
         type: String,
